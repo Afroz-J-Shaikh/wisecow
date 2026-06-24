@@ -10,6 +10,19 @@ spec:
     kubernetes:
       envoyService:
         type: NodePort
+        patch:
+          type: StrategicMergePatch
+          value:
+            spec:
+              ports:
+                - name: http
+                  port: 80
+                  nodePort: 30080        # ← must match kind extraPortMappings
+                  protocol: TCP
+                - name: https
+                  port: 443
+                  nodePort: 30443        # ← must match kind extraPortMappings
+                  protocol: TCP
 ---
 apiVersion: gateway.networking.k8s.io/v1
 kind: GatewayClass
@@ -33,7 +46,7 @@ spec:
   listeners:
     - name: http
       protocol: HTTP
-      port: 4499
+      port: 80
       allowedRoutes:
         namespaces:
           from: Same

@@ -42,14 +42,12 @@ spec:
               cpu: 250m
               memory: 128Mi
           livenessProbe:
-            httpGet:
-              path: /health
+            tcpSocket:                  
               port: 4499
             initialDelaySeconds: 15
             periodSeconds: 10
           readinessProbe:
-            httpGet:
-              path: /health
+            tcpSocket:                  
               port: 4499
             initialDelaySeconds: 5
             periodSeconds: 5
