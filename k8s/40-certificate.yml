@@ -6,7 +6,7 @@ metadata:
 spec:
   secretName: wisecow-tls-secret
   issuerRef:
-    name: letsencrypt-prod
+    name: wisecow-ca-issuer
     kind: ClusterIssuer
   dnsNames:
-    - ec2-54-213-236-180.us-west-2.compute.amazonaws.com
+    - ec2-54-92-157-144.compute-1.amazonaws.com
