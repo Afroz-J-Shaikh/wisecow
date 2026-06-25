@@ -1,0 +1,20 @@
+name: Continuous Deployment
+
+on:
+  workflow_run:
+    workflows: ["CI Build & Push"]
+    types:
+      - success
+
+jobs:
+  deploy:
+
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Code Checkout
+        uses: actions/checkout@v7
+
+        
+
