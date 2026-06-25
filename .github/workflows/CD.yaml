@@ -4,7 +4,7 @@ on:
   workflow_run:
     workflows: ["CI Build & Push"]
     types:
-      - success
+      - completed
 
 jobs:
   deploy:
@@ -12,9 +12,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-
-      - name: Code Checkout
-        uses: actions/checkout@v7
 
       - name: Deploy via SSH
         uses: appleboy/ssh-action@master
