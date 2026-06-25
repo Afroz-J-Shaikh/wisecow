@@ -8,6 +8,7 @@ on:
       - 'k8s/'
       - 'setup/'
       - '*.md'
+      - 'script/'
 
 permissions:
   contents: write
