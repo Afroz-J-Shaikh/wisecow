@@ -29,7 +29,7 @@ spec:
     spec:
       containers:
         - name: app
-          image: afroz25/wisecow:128dd7b
+          image: afroz25/wisecow:b02aadf
           imagePullPolicy: IfNotPresent
           ports:
             - name: http
