@@ -20,8 +20,7 @@ cat <<EOF > $RSPFILE
 HTTP/1.1 200
 
 
-#<pre>`cowsay $mod`</pre>
-<pre>$(echo "hi afroz"; echo "$mod" | cowsay)</pre>
+<pre>`cowsay $mod`</pre>
 EOF
 }
 
