@@ -16,5 +16,17 @@ jobs:
       - name: Code Checkout
         uses: actions/checkout@v7
 
+      - name: Deploy via SSH
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USER }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          script: |
+            cd ~/wisecow/k8s
+            git pull origin main
+            kubectl apply -f 10-app.yml
+            echo "New Image Deployed"
+
         
 
