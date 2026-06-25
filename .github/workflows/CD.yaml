@@ -22,7 +22,7 @@ jobs:
           script: |
             cd ~/wisecow/k8s
             git pull origin main
-            kubectl apply -f 10-app.yml
+            kubectl apply -f 10-app.yaml
             echo "New Image Deployed"
 
         
