@@ -54,3 +54,12 @@ Wait for it to be ready:
 ```bash
 kubectl rollout status deployment/metrics-server -n kube-system --timeout=120s
 ```
+
+```bash
+kubectl patch svc envoy-wisecow-wisecow-gateway-5e20ce84 -n envoy-gateway-system \
+  --type='json' \
+  -p='[
+    {"op":"replace","path":"/spec/ports/0/nodePort","value":30080},
+    {"op":"replace","path":"/spec/ports/1/nodePort","value":30443}
+  ]'
+  ```
