@@ -1,0 +1,24 @@
+apiVersion: security.kubearmor.com/v1
+kind: KubeArmorPolicy
+metadata:
+  name: only-allow-app
+  namespace: wisecow
+spec:
+  selector:
+    matchLabels:
+      app: app
+
+  file:
+    matchPaths:
+    - path: /etc/shadow        # block credential access
+    matchDirectories:
+    - dir: /proc/
+      recursive: true          # block proc snooping
+
+  process:
+    matchPaths:
+    - path: /bin/wget          # block download tools
+    - path: /usr/bin/curl
+    - path: /bin/nmap
+
+  action: Block

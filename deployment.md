@@ -1,11 +1,25 @@
-### Step 2: Install Envoy Gateway
+# How to deploy the app on KIND cluster in detail guide
+
+## For deploying app to kind cluster
+
+### Step 1: Clone this repo
+
+### Step 2: Go to setup folder
+
+```bash
+chmod +x setup.sh
+sudo setup.sh
+newgrp docker
+kind create cluster --config kind-config.yml
+```
+
+### Step 3: Install Envoy Gateway 
 
 ```bash
 helm install eg oci://docker.io/envoyproxy/gateway-helm \
   --namespace envoy-gateway-system \
   --create-namespace \
   --version v1.2.0
-
 
 # Wait for it to be ready
 kubectl wait --namespace envoy-gateway-system \
@@ -14,7 +28,7 @@ kubectl wait --namespace envoy-gateway-system \
   --timeout=120s
 ```
 
-### Step 3: Install cert-manager
+### Step 4: Install cert-manager
 
 ```bash
 helm repo add jetstack https://charts.jetstack.io
@@ -33,7 +47,7 @@ kubectl wait --namespace cert-manager \
 ```
 
 
-## 4. Install metrics-server
+### Step 5: Install metrics-server
 
 HPA needs real CPU/memory numbers. Without this, `kubectl top` and autoscaling won't work.
 
@@ -55,6 +69,13 @@ Wait for it to be ready:
 kubectl rollout status deployment/metrics-server -n kube-system --timeout=120s
 ```
 
+### Step 6: Change DNS name (AWS EC2 instance public DNS)
+   - Change DNS name in 40-certificate.yaml to your current DNS name
+   - Change DNS name in 50-gateway.yaml(appears 2 times) to your current DNS name
+
+### Step 7: Appy all files in k8s folder
+
+### Step 8: Patch ports
 ```bash
 kubectl patch svc envoy-wisecow-wisecow-gateway-5e20ce84 -n envoy-gateway-system \
   --type='json' \
@@ -63,3 +84,15 @@ kubectl patch svc envoy-wisecow-wisecow-gateway-5e20ce84 -n envoy-gateway-system
     {"op":"replace","path":"/spec/ports/1/nodePort","value":30443}
   ]'
   ```
+
+## For CI/CD
+
+### Add secrets and variables to your GitHub repo
+
+#### Secrets 
+   - DOCKERHUB_TOKEN
+   - EC2_HOST
+   - EC2_SSH_KEY
+   - EC2_USER
+#### Variables
+   - DOCKERHUB_USER
